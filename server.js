@@ -1,15 +1,26 @@
-let express = require('express'); // libraru for the server
-let port = process.env.PORT || 3000;
-let app = express();
-app.use(express.static('public'))
+'use strict';
 
-// test from localhost:3000
-app.get('/',(req,res) => {
-    res.status(200).sendFile('index.html')
-})
+require('dotenv').config();
+const express = require('express');
+const app = express();
 
-// test from ubunto
-app.listen(port,() => {
-    console.log('test');
-})
+const PORT = process.env.PORT || 3000;
 
+app.use(express.static('./public'));
+
+app.get('/hello', (request, response) => {
+  response.status(200).send('Hello');
+});
+
+app.get('/data', (request, response) => {
+  let airplanes = {
+    departure: Date.now(),
+    canFly: true,
+    pilot: 'Well Trained',
+  };
+  response.status(200).json(airplanes);
+});
+
+app.use('*', (request, response) => response.send('Sorry, that route does not exist.'));
+
+app.listen(PORT,() => console.log(`Listening on port ${PORT}`));
