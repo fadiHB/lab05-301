@@ -1,5 +1,5 @@
 let express = require('express'); // libraru for the server
-let port = 3000;
+let port = process.env.PORT || 3000;
 let app = express();
 app.use(express.static('public'))
 
